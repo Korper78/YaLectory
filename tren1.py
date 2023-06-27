@@ -16,19 +16,19 @@
 # print('/' + '/'.join(c_str))
 
 # task C
-# with open('input.txt', 'r') as file_in, open('output.txt', 'w') as file_out:
-#     n = int(file_in.readline())
-#     prices = list(map(int, file_in.readline().split()))
-#     day_min, day_max, profit = 0, 0, 1
-#     for day in range(1, n):
-#         price = prices.pop(0)
-#         d_max, diff = 0, 1
-#         for d, prof in enumerate(map(lambda p: p / price, prices)):
-#             if prof > diff:
-#                 d_max, diff = d + 1, prof
-#         if d_max and diff > profit:
-#             day_min, day_max, profit = day, day + d_max, diff
-#     print(f'{day_min} {day_max}', file=file_out)
+with open('input.txt', 'r') as file_in, open('output.txt', 'w') as file_out:
+    n = int(file_in.readline())
+    prices = list(map(int, file_in.readline().split()))
+    day_min, day_max, min_day = 0, 0, 0
+    for day in range(1, n):
+        if prices[day_max] * prices[min_day] < prices[day_min] * prices[day]:
+            day_min, day_max = min_day, day
+        if prices[day] < prices[min_day]:
+            min_day = day
+    if day_max:
+        print(f'{day_min+1} {day_max+1}', file=file_out)
+    else:
+        print('0 0', file=file_out)
 
 # task D
 # from time import strptime
@@ -44,18 +44,21 @@
 #     print(min_interval, file=file_out)
 
 # task E
-import re
-
-palindrome = input()
-not_a = re.search('[b-z]', palindrome)
-not_palindrome = ''
-if not_a and not_a.start() != len(palindrome) // 2:
-    # if not_a.start() == len(palindrome) // 2:
-    #     if palindrome[not_a.start()] == 'b':
-    #         not_palindrome = palindrome[:not_a.end()] + 'b' + palindrome[not_a.end()+1:]
-    #     else:
-    #         not_palindrome = palindrome[:not_a.start()] + 'b' + palindrome[not_a.end():]
-    # else:
-    #     not_palindrome = palindrome[:not_a.start()] + 'a' + palindrome[not_a.end():]
-    not_palindrome = palindrome[:not_a.start()] + 'a' + palindrome[not_a.end():]
-print(not_palindrome)
+# import re
+#
+# palindrome = input()
+# not_a = re.search('[b-z]', palindrome)
+# not_palindrome = ''
+# # if not_a and not_a.start() != len(palindrome) // 2:
+# if not_a:
+#     if not_a.start() == len(palindrome) // 2:
+#         if palindrome[not_a.start()] == 'b':
+#             not_palindrome = palindrome[:not_a.end()] + 'b' + palindrome[not_a.end()+1:]
+#         else:
+#             not_palindrome = palindrome[:not_a.start()] + 'b' + palindrome[not_a.end():]
+#     else:
+#         not_palindrome = palindrome[:not_a.start()] + 'a' + palindrome[not_a.end():]
+# elif len(palindrome) > 1:
+#     not_palindrome = palindrome[:-1] + 'b'
+#     # not_palindrome = palindrome[:not_a.start()] + 'a' + palindrome[not_a.end():]
+# print(not_palindrome)
