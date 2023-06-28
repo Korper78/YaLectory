@@ -25,15 +25,13 @@
 
 # task C
 # with open('input.txt', 'r') as file_in, open('output.txt', 'w') as file_out:
-#     dictry = sorted(file_in.readline().split())
+#     dictry = set(file_in.readline().split())
 #     text = file_in.readline().split()
 #     for i in range(len(text)):
-#         for word in dictry:
-#             if text[i].startswith(word):
-#                 text[i] = word
+#         for j in range(1, min(101, len(text[i]))):
+#             if text[i][:j] in dictry:
+#                 text[i] = text[i][:j]
 #                 break
-#     # for word in dictry:
-#     #     text = [word if w.startswith(word) else w for w in text]
 #     print(*text, file=file_out)
 
 # task D
@@ -44,16 +42,14 @@
 #     arr = file_in.readline().split()
 #     print(Counter(arr).most_common(1)[0][0], file=file_out)
 
-# task C
+# task E
 from collections import Counter
 
 with open('input.txt', 'r') as file_in, open('output.txt', 'w') as file_out:
     n = int(file_in.readline())
     arr = list(map(int, file_in.readline().split()))
     cnt = Counter(arr)
-    cnt_keys = sorted(list(cnt.keys()))
-    min_n = n - 2
-    for k in range(len(cnt_keys) - 1):
-        if cnt_keys[k+1] - cnt_keys[k] == 1:
-            min_n = min(min_n, n - cnt[cnt_keys[k+1]] - cnt[cnt_keys[k+1]])
-    print(min_n, file=file_out)
+    max_n = 0
+    for k in cnt.keys():
+        max_n = max(max_n, cnt[k] + cnt.get(k+1, 0), cnt[k] + cnt.get(k-1, 0))
+    print(n - max_n, file=file_out)
