@@ -27,3 +27,14 @@
 #     print(c, file=file_out)
 
 # task C
+with open('input.txt', 'r') as file_in, open('output.txt', 'w') as file_out:
+    n, k = map(int, file_in.readline().split())
+    lamps = list(map(int, file_in.readlines()))
+    lights = 0
+    light = []
+    while len(light) < n:
+        max_lamp = max(lamps)
+        lamp = lamps.index(max_lamp)
+        light.append(lamp + 1)
+
+    print(n, k, lamps)
